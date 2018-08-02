@@ -34,7 +34,6 @@
             android:layout_width="256dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="16dp"
             android:max="100" />
 
     </LinearLayout>

@@ -78,7 +78,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/AppTheme.Light.Translucent"/>
+            android:theme="@style/AppTheme.Light.Translucent.NoActionBar"/>
     </application>
 
 </manifest>

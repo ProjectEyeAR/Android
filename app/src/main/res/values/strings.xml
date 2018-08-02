@@ -34,7 +34,7 @@
     <string name="auto_login">Auto Login</string>
     <string name="forget_email">forget email</string>
     <string name="forgot_password">forgot password</string>
-    <string name="button_my_page">My\nPage.</string>
+    <string name="button_my_page">my page</string>
     <string name="button_filter">filter</string>
     <string name="button_follow">follow</string>
     <string name="text_view_followers">followers</string>

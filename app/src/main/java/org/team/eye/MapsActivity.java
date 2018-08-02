@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -44,13 +45,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        ConstraintLayout constraintLayout = findViewById(R.id.MapActivity_ConstraintLayout);
+        ConstraintLayout constraintLayout = findViewById(R.id.MapsActivity_ConstraintLayout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        Button myPageButton = findViewById(R.id.MapActivity_MyPageButton);
+        FloatingActionButton myLocationFloatingActionButton = findViewById(
+                R.id.MapsActivity_MyLocationFloatActionButton
+        );
+
+        FloatingActionButton arFloatingActionButton = findViewById(
+                R.id.MapsActivity_ARFloatActionButton
+        );
+        arFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, ARCameraActivity.class));
+            }
+        });
+
+        Button myPageButton = findViewById(R.id.MapsActivity_MyPageButton);
         myPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +75,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        SeekBar seekBar = findViewById(R.id.MapActivity_SeekBar);
+        SeekBar seekBar = findViewById(R.id.MapsActivity_SeekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 100) {
+                    seekBar.setProgress(0);
 
+                    Intent intent = new Intent(
+                            MapsActivity.this,
+                            CameraActivity.class
+                    );
+
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -74,10 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (seekBar.getProgress() == 100) {
-                    seekBar.setProgress(0);
-                    startActivity(new Intent(MapsActivity.this, ARCameraActivity.class));
-                } else {
+                if (seekBar.getProgress() != 100) {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         seekBar.setProgress(0, true);
                     } else {
@@ -89,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.MapsActivity_Map);
         mapFragment.getMapAsync(this);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -166,7 +187,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 finish();
             }
         }
-
-        mMap.setMyLocationEnabled(true);
     }
 }

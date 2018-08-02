@@ -8,54 +8,95 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@drawable/gradient_animation"
-    android:id="@+id/MapActivity_ConstraintLayout"
+    android:id="@+id/MapsActivity_ConstraintLayout"
     tools:context=".MapsActivity">
 
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/color_background"
-        android:elevation="8dp">
+        android:background="@color/color_background">
 
         <fragment
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
+            android:id="@+id/MapsActivity_Map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-            <requestFocus />
         </fragment>
 
-        <SeekBar
-            style="@style/SeekBar"
-            android:id="@+id/MapActivity_SeekBar"
-            android:layout_width="100dp"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/MapsActivity_ARFloatActionButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/MapsActivity_PanelConstraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            style="@android:style/Widget.Material.Button.Borderless"
-            android:id="@+id/MapActivity_MyPageButton"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/MapsActivity_MyLocationFloatActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/MapsActivity_ARFloatActionButton"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:lines="2"
-            android:text="@string/button_my_page"
-            android:textAlignment="textStart"
-            android:textColor="@color/color_gradient_end"
-            android:textAppearance="@android:style/TextAppearance.Material.Title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:background="@drawable/radius_background"
+            android:elevation="@dimen/elevation"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </SearchView>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/MapsActivity_PanelConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_small_margin"
+            android:paddingBottom="@dimen/activity_vertical_small_margin"
+            android:paddingStart="@dimen/activity_horizontal_small_margin"
+            android:paddingEnd="@dimen/activity_horizontal_small_margin"
+            android:background="@drawable/radius_background"
+            android:elevation="@dimen/elevation"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:theme="@style/AppTheme"
+                android:backgroundTint="@color/color_primaryDark"
+                android:id="@+id/MapsActivity_MyPageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_my_page"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <SeekBar
+                style="@style/SeekBar"
+                android:id="@+id/MapsActivity_SeekBar"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
