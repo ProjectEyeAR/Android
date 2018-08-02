@@ -1,11 +1,97 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primaryDark</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primaryDark</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    <style name="AppTheme.Light.Translucent" parent="AppTheme.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    <style name="AppTheme.Light.User" parent="AppTheme.Light">
+        <item name="actionBarTheme">@style/AppTheme.User.ActionBarTheme</item>
+        <item name="actionBarStyle">@style/AppTheme.User.ActionBarStyle</item>
+
+        <item name="colorPrimary">@color/color_user_background</item>
+        <item name="colorPrimaryDark">@color/color_user_background</item>
+        <item name="colorAccent">@color/color_gradient_start</item>
+
+        <item name="titleTextColor">@color/color_gradient_start</item>
+        <item name="subtitleTextColor">@color/color_gradient_start</item>
+
+        <item name="colorControlNormal">@color/color_gradient_start</item>
+
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+    <style name="AppTheme.Translucent.NoActionBar" parent="AppTheme.Translucent">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.Light.Translucent.NoActionBar" parent="AppTheme.Light.Translucent">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.Splash" parent="AppTheme.NoActionBar" />
+
+    <style name="AppTheme.User.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/color_gradient_start</item>
     </style>
 
+    <style name="AppTheme.User.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/color_user_background</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.Button" parent="@style/Widget.AppCompat.Button.Borderless" >
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:padding">6dp</item>
+        <item name="background">@drawable/button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SeekBar" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/seek_bar</item>
+        <item name="android:thumb">@drawable/seek_bar_thumb</item>
+        <item name="android:minWidth">100dp</item>
+        <item name="android:maxWidth">100dp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:maxHeight">32dp</item>
+        <item name="android:splitTrack">false</item>
+        <item name="android:thumbOffset">-2dp</item>
+    </style>
+
+    <style name="SeekBarLarge" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/seek_bar_large</item>
+        <item name="android:thumb">@drawable/seek_bar_thumb_large</item>
+        <item name="android:minWidth">256dp</item>
+        <item name="android:maxWidth">256dp</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="android:maxHeight">64dp</item>
+        <item name="android:splitTrack">false</item>
+        <item name="android:thumbOffset">-6dp</item>
+    </style>
 </resources>

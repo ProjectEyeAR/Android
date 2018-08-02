@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">Eye</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="dialog_title_permission">Permission</string>
+    <string name="dialog_message_permission">This permissions are required to run this app.</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_ar_camera">ARCameraActivity</string>
+    <string name="title_activity_user">UserActivity</string>
+
+    <string name="login_form_title"><font fgcolor='#FBC5EC'>Seoul</font> Soul.</string>
+    <string name="splash_title">Seoul Soul.</string>
+
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_number">0</string>
+
+    <string name="auto_login">Auto Login</string>
+    <string name="forget_email">forget email</string>
+    <string name="forgot_password">forgot password</string>
+    <string name="button_my_page">My\nPage.</string>
+    <string name="button_filter">filter</string>
+    <string name="button_follow">follow</string>
+    <string name="text_view_followers">followers</string>
+    <string name="text_view_following">following</string>
+    <string name="text_view_collected">collected</string>
 </resources>
