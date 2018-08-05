@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -32,13 +34,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    private static final int DEFAULT_ZOOM = 10;
+    private enum MyLocationMode {
+        DISABLED(0),
+        ENABLED(1),
+        ENABLED_DIRECTION(2);
+
+        private final int id;
+
+        MyLocationMode(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static MyLocationMode fromId(int id) {
+            for (MyLocationMode myLocationMode: values()) {
+                if (myLocationMode.id == id) {
+                    return myLocationMode;
+                }
+            }
+
+            return MyLocationMode.DISABLED;
+        }
+    }
+
+    private static final int DEFAULT_ZOOM = 20;
 
     private GoogleMap mMap;
     private LocationManager mLocationManager;
     private Session mSession;
+    private Location mLocation;
+
+    private FloatingActionButton mMyLocationFloatingActionButton;
 
     private List<String> mRequiredPermissionList;
+
+    private MyLocationMode mMyLocationMode = MyLocationMode.DISABLED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +84,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        FloatingActionButton myLocationFloatingActionButton = findViewById(
+        mMyLocationFloatingActionButton = findViewById(
                 R.id.MapsActivity_MyLocationFloatActionButton
         );
+        mMyLocationFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chageMyLocationMode(MyLocationMode.fromId(mMyLocationMode.getId() + 1));
+            }
+        });
 
         FloatingActionButton arFloatingActionButton = findViewById(
                 R.id.MapsActivity_ARFloatActionButton
@@ -122,17 +161,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mRequiredPermissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         for (String permission: mRequiredPermissionList) {
-            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, permission) !=
+                    PackageManager.PERMISSION_GRANTED) {
                 finish();
             }
         }
 
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 1000, new LocationListener() {
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1000, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM);
-                mMap.animateCamera(cameraUpdate);
+                mLocation = location;
+
+                if (mMyLocationMode.getId() > 0) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM);
+                    mMap.animateCamera(cameraUpdate);
+                }
             }
 
             @Override
@@ -187,5 +231,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 finish();
             }
         }
+
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+            @Override
+            public void onCameraMoveStarted(int i) {
+                if (i == REASON_GESTURE) {
+                    chageMyLocationMode(MyLocationMode.DISABLED);
+                }
+            }
+        });
+    }
+
+    private void chageMyLocationMode(MyLocationMode myLocationMode) {
+        mMyLocationMode = myLocationMode;
+
+        int color;
+
+        switch (mMyLocationMode) {
+            case ENABLED:
+            case ENABLED_DIRECTION:
+                color = getResources().getColor(R.color.color_primaryDark);
+
+                if (mLocation != null) {
+                    LatLng latLng = new LatLng(
+                            mLocation.getLatitude(),
+                            mLocation.getLongitude()
+                    );
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                            latLng,
+                            DEFAULT_ZOOM
+                    );
+                    mMap.animateCamera(cameraUpdate);
+                }
+
+                break;
+            case DISABLED:
+            default:
+                color = Color.WHITE;
+                break;
+        }
+
+        mMyLocationFloatingActionButton.setBackgroundTintList(
+                ColorStateList.valueOf(color)
+        );
     }
 }
