@@ -33,7 +33,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Light">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -52,13 +52,13 @@
         </activity>
         <activity
             android:name=".ARCameraActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_ar_camera"
-            android:theme="@style/AppTheme.Light.Translucent.NoActionBar"
-            android:configChanges="orientation|screenSize" />
+            android:theme="@style/AppTheme.Light.Translucent.NoActionBar" />
         <activity
             android:name=".UserActivity"
             android:label=""
-            android:theme="@style/AppTheme.Light.User" >
+            android:theme="@style/AppTheme.Light.User">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.team.eye.UserActivity" />
@@ -78,7 +78,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/AppTheme.Light.Translucent.NoActionBar"/>
+            android:theme="@style/AppTheme.Light.Translucent.NoActionBar" />
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>
