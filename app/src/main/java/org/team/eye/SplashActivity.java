@@ -27,6 +27,12 @@ public class SplashActivity extends AppCompatActivity {
         );
         */
 
+        if (!Session.getInstance().isHaveSession()) {
+            startActivity(new Intent(this, MapsActivity.class));
+            finish();
+            return;
+        }
+
         SeekBar seekBar = (SeekBar) findViewById(R.id.SplashActivity_SeekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
