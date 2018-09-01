@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".ThisApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -79,7 +80,8 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.Light.Translucent.NoActionBar" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>

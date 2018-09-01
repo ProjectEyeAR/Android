@@ -25,14 +25,14 @@
         <item name="actionBarTheme">@style/AppTheme.User.ActionBarTheme</item>
         <item name="actionBarStyle">@style/AppTheme.User.ActionBarStyle</item>
 
-        <item name="colorPrimary">@color/color_user_background</item>
-        <item name="colorPrimaryDark">@color/color_user_background</item>
-        <item name="colorAccent">@color/color_gradient_start</item>
+        <item name="colorPrimary">@color/color_userBackground</item>
+        <item name="colorPrimaryDark">@color/color_userBackground</item>
+        <item name="colorAccent">@color/color_primaryDark</item>
 
-        <item name="titleTextColor">@color/color_gradient_start</item>
-        <item name="subtitleTextColor">@color/color_gradient_start</item>
+        <item name="titleTextColor">@color/color_primaryDark</item>
+        <item name="subtitleTextColor">@color/color_primaryDark</item>
 
-        <item name="colorControlNormal">@color/color_gradient_start</item>
+        <item name="colorControlNormal">@color/color_primaryDark</item>
 
         <item name="elevation">0dp</item>
         <item name="android:elevation">0dp</item>
@@ -52,11 +52,11 @@
     <style name="AppTheme.Splash" parent="AppTheme.NoActionBar" />
 
     <style name="AppTheme.User.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/color_gradient_start</item>
+        <item name="colorControlNormal">@color/color_accent</item>
     </style>
 
     <style name="AppTheme.User.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">@color/color_user_background</item>
+        <item name="background">@color/color_userBackground</item>
         <item name="elevation">0dp</item>
     </style>
 
@@ -64,16 +64,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppTheme.Button" parent="@style/Widget.AppCompat.Button.Borderless" >
-        <item name="android:minWidth">0dp</item>
-        <item name="android:minHeight">0dp</item>
-        <item name="android:padding">6dp</item>
-        <item name="background">@drawable/button</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="SeekBar" parent="android:Widget.SeekBar">
+    <style name="AppTheme.SeekBar" parent="android:Widget.SeekBar">
         <item name="android:progressDrawable">@drawable/seek_bar</item>
         <item name="android:thumb">@drawable/seek_bar_thumb</item>
         <item name="android:minWidth">100dp</item>
@@ -84,7 +75,7 @@
         <item name="android:thumbOffset">-2dp</item>
     </style>
 
-    <style name="SeekBarLarge" parent="android:Widget.SeekBar">
+    <style name="AppTheme.SeekBarLarge" parent="android:Widget.SeekBar">
         <item name="android:progressDrawable">@drawable/seek_bar_large</item>
         <item name="android:thumb">@drawable/seek_bar_thumb_large</item>
         <item name="android:minWidth">256dp</item>
@@ -93,5 +84,21 @@
         <item name="android:maxHeight">64dp</item>
         <item name="android:splitTrack">false</item>
         <item name="android:thumbOffset">-6dp</item>
+    </style>
+
+    <style name="AppTheme.SwitchButton.Left" parent="android:Widget.Button">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:minWidth">72dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/switch_button_left</item>
+    </style>
+
+    <style name="AppTheme.SwitchButton.Right" parent="android:Widget.Button">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:minWidth">72dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/switch_button_right</item>
     </style>
 </resources>

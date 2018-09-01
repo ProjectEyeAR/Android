@@ -1,5 +1,6 @@
 package org.team.eye;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ImageMemo implements Parcelable {
+    public static final String LOCATION_PROVIDER = "ImageMemo";
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss",
             Locale.US
@@ -21,13 +23,25 @@ public class ImageMemo implements Parcelable {
     private String mImage;
     private String mImageFilter;
     private String mMemo;
+    private Location mLocation;
     private Date mTimestamp;
+
+    public ImageMemo() {
+        super();
+    }
 
     public ImageMemo(JSONObject jsonObject) {
         mUser = new User(jsonObject.optJSONObject("user"));
         mImage = jsonObject.optString("image", null);
         mImageFilter = jsonObject.optString("imageFilter", null);
         mMemo = jsonObject.optString("memo",  null);
+
+        double longitude = jsonObject.optDouble("longitude", 0.0);
+        double latitude = jsonObject.optDouble("latitude", 0.0);
+
+        mLocation = new Location(mUser.getUsername());
+        mLocation.setLongitude(longitude);
+        mLocation.setLatitude(latitude);
 
         try {
             mTimestamp = SIMPLE_DATE_FORMAT.parse(jsonObject.getString("timestamp"));
@@ -37,7 +51,7 @@ public class ImageMemo implements Parcelable {
     }
 
     public ImageMemo(Parcel parcel) {
-        String[] strings = new String[7];
+        String[] strings = new String[9];
 
         parcel.readStringArray(strings);
 
@@ -46,8 +60,12 @@ public class ImageMemo implements Parcelable {
         mImageFilter = strings[4];
         mMemo = strings[5];
 
+        mLocation = new Location(mUser.getUsername());
+        mLocation.setLongitude(Double.parseDouble(strings[6]));
+        mLocation.setLatitude(Double.parseDouble(strings[7]));
+
         try {
-            mTimestamp = SIMPLE_DATE_FORMAT.parse(strings[6]);
+            mTimestamp = SIMPLE_DATE_FORMAT.parse(strings[8]);
         } catch (ParseException e) {
             mTimestamp = null;
         }
@@ -81,6 +99,10 @@ public class ImageMemo implements Parcelable {
         return mMemo;
     }
 
+    public Location getLocation() {
+        return mLocation;
+    }
+
     public Date getTimestamp() {
         return mTimestamp;
     }
@@ -101,6 +123,10 @@ public class ImageMemo implements Parcelable {
         this.mMemo = mMemo;
     }
 
+    public void setLocation(Location mLocation) {
+        this.mLocation = mLocation;
+    }
+
     public void setTimestamp(Date mTimestamp) {
         this.mTimestamp = mTimestamp;
     }
@@ -119,6 +145,8 @@ public class ImageMemo implements Parcelable {
                 mImage,
                 mImageFilter,
                 mMemo,
+                Double.toString(mLocation.getLongitude()),
+                Double.toString(mLocation.getLatitude()),
                 SIMPLE_DATE_FORMAT.format(mTimestamp)
         };
         dest.writeStringArray(strings);

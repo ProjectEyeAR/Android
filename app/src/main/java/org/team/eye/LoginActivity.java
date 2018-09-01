@@ -4,57 +4,37 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private static final int REQUIRED_PERMISSIONS_REQUEST_CODE = 100;
+    private static final int REQUIRED_PERMISSIONS_REQUEST_CODE = 1;
     private static final String[] REQUIRED_PERMISSIONS = new String[]{
-            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.CAMERA,
-            Manifest.permission.BODY_SENSORS,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.GET_ACCOUNTS
@@ -71,26 +51,18 @@ public class LoginActivity extends AppCompatActivity {
      */
     private UserLoginTask mAuthTask = null;
 
-    private List<String> mNeededPermissionList = new ArrayList<>();
-
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private SeekBar mSignInSeekBar;
+    private Button mLoginButton;
+    private Button mSignUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        /*
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        );
-        */
 
         ConstraintLayout constraintLayout = findViewById(R.id.LoginActivity_ConstraintLayout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
@@ -99,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         animationDrawable.start();
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailView = findViewById(R.id.email);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -112,97 +84,40 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mSignInSeekBar = findViewById(R.id.sign_in_seek_bar);
-        mSignInSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (seekBar.getProgress() == 100) {
-                    seekBar.setProgress(0);
-                    attemptLogin();
-                }
-            }
+        mLoginButton = findViewById(R.id.LoginActivity_LoginButton);
+        mSignUpButton = findViewById(R.id.LoginActivity_SignUpButton);
 
+        mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                if (seekBar.getProgress() != 100) {
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        seekBar.setProgress(0, true);
-                    } else {
-                        seekBar.setProgress(0);
-                    }
-                }
+            public void onClick(View v) {
+                attemptLogin();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        mNeededPermissionList = getNeededPermission();
-
-        if (mNeededPermissionList.size() > 0) {
-            requestPermission(mNeededPermissionList);
-        }
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUIRED_PERMISSIONS_REQUEST_CODE) {
-            for (int i: grantResults) {
-                if (i == PackageManager.PERMISSION_GRANTED) {
-                    mNeededPermissionList.remove(permissions[i]);
-                }
-            }
-
-            if (mNeededPermissionList .size() > 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        requestPermission(mNeededPermissionList);
-                    }
-                }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        moveTaskToBack(true);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                    }
-                }).setTitle(R.string.dialog_title_permission)
-                        .setMessage(R.string.dialog_message_permission)
-                        .show();
-            }
-        }
-    }
-
-    private List<String> getNeededPermission() {
-        List<String> neededPermissionList = new ArrayList<>();
+        List<String> permissionList = new ArrayList<>();
 
         for (String permission: REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                neededPermissionList.add(permission);
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission) &&
+                    ContextCompat.checkSelfPermission(this, permission) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(permission);
             }
         }
 
-        return neededPermissionList;
+        requestPermissions(permissionList);
     }
 
-    private void requestPermission(List<String> neededPermissionList) {
-        if (neededPermissionList.size() > 0) {
-            String[] neededPermissions = new String[neededPermissionList.size()];
-            neededPermissions = neededPermissionList.toArray(neededPermissions);
+    private void requestPermissions(List<String> permissionList) {
+        if (permissionList.size() > 0) {
+            String[] permissions = new String[permissionList.size()];
+            permissionList.toArray(permissions);
 
             ActivityCompat.requestPermissions(
                     this,
-                    neededPermissions,
+                    permissions,
                     REQUIRED_PERMISSIONS_REQUEST_CODE
             );
         }
@@ -215,7 +130,6 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        mSignInSeekBar.setEnabled(false);
         if (mAuthTask != null) {
             return;
         }
@@ -260,8 +174,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-
-        mSignInSeekBar.setEnabled(true);
     }
 
     private boolean isEmailValid(String email) {

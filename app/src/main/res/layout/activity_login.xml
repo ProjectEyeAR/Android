@@ -92,14 +92,28 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <SeekBar
-                    style="@style/SeekBar"
-                    android:id="@+id/sign_in_seek_bar"
-                    android:layout_width="100dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_gravity="end"
-                    android:max="100" />
+                    android:layout_marginTop="@dimen/activity_vertical_large_margin"
+                    android:orientation="horizontal">
+
+                    <Button
+                        style="@style/AppTheme.SwitchButton.Left"
+                        android:id="@+id/LoginActivity_SignUpButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sign_up" />
+
+                    <Button
+                        style="@style/AppTheme.SwitchButton.Right"
+                        android:id="@+id/LoginActivity_LoginButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -122,7 +136,7 @@
             style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_primary"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:text="@string/forget_email"/>
@@ -131,7 +145,7 @@
             style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_primary"
             android:textAllCaps="false"
             android:text="@string/forgot_password"/>
 
