@@ -26,7 +26,7 @@
             android:textSize="16pt"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:text="@string/splash_title"/>
+            android:text="@string/app_name"/>
 
         <SeekBar
             style="@style/AppTheme.SeekBarLarge"

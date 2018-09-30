@@ -8,4 +8,6 @@
     <dimen name="activity_vertical_small_margin">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="elevation">8dp</dimen>
+    <dimen name="settings_header_width">96dp</dimen>
+    <dimen name="settings_header_height">4dp</dimen>
 </resources>

@@ -7,6 +7,10 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
+
+        <item name="elevation">0dp</item>
+
+        <item name="android:elevation">0dp</item>
     </style>
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
@@ -14,11 +18,15 @@
         <item name="colorPrimaryDark">@color/color_primaryDark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@color/color_userBackground</item>
+
+        <item name="elevation">0dp</item>
+
+        <item name="android:elevation">0dp</item>
     </style>
-    <style name="AppTheme.Light.User" parent="AppTheme.Light">
-        <item name="actionBarTheme">@style/AppTheme.User.ActionBarTheme</item>
-        <item name="actionBarStyle">@style/AppTheme.User.ActionBarStyle</item>
+    <style name="AppTheme.Light.Alt" parent="AppTheme.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
         <item name="colorPrimary">@color/color_userBackground</item>
         <item name="colorPrimaryDark">@color/color_userBackground</item>
